@@ -1,0 +1,38 @@
+plugins {
+    id 'java'
+}
+
+group 'br.thiago'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter:2.7.3'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test:2.7.3'
+    implementation 'io.cucumber:cucumber-java:7.9.0'
+    testImplementation 'io.cucumber:cucumber-spring:7.9.0'
+    testImplementation 'io.cucumber:cucumber-junit:7.9.0'
+    implementation 'io.qameta.allure:allure-rest-assured:2.20.1'
+    testImplementation 'io.qameta.allure:allure-cucumber7-jvm:2.20.1'
+    compileOnly 'org.projectlombok:lombok:1.18.24'
+    annotationProcessor 'org.projectlombok:lombok:1.18.24'
+    testCompileOnly 'org.projectlombok:lombok:1.18.24'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.24'
+    testImplementation 'org.awaitility:awaitility:4.2.0'
+    testImplementation 'io.rest-assured:rest-assured:5.3.0'
+    testImplementation 'io.rest-assured:json-path:5.3.0'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.14.1'
+}
+
+clean {
+    delete rootProject.buildDir
+    delete "${rootDir}/allure-results"
+}
+
+test {
+    systemProperty("spring.profiles.active", project.properties.get("springProfiles"))
+    systemProperty("cucumber.filter.tags", project.properties.get("cucumberTags"))
+}
